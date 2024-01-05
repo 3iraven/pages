@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+// export default App;
 import './App.css';
+import React, { useState } from 'react';
+import './App.css';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import Home from './Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AssetPage from './AssetPage';
+import License from './LicensePage';
+import EmployeeForm from './EmployeeForm';
 
-function App() {
+const App: React.FC = () => {
+  const [openSidebarToggle, setOpenSidebarToggle] = useState<boolean>(false);
+
+  const OpenSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className='grid-container'>
+        <Header OpenSidebar={OpenSidebar}/>
+        <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
+      
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/assets" element={<AssetPage />} />
+          <Route path="/categories" element={<License />} />
+          <Route path="/employee" element={<EmployeeForm />} />
+          {/* ... other routes ... */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
+
